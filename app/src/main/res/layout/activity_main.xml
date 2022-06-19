@@ -25,7 +25,7 @@
         android:layout_marginStart="@dimen/common_spacing"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/publishied"
+        app:layout_constraintBottom_toTopOf="@id/published"
         app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
@@ -33,7 +33,7 @@
         tools:text="@sample/posts.json/data/author" />
 
     <TextView
-        android:id="@+id/publishied"
+        android:id="@+id/published"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing"
@@ -61,13 +61,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar, publishied, menu" />
+        app:constraint_referenced_ids="avatar, published, menu" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
         android:autoLink="web"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +91,7 @@
         android:contentDescription="@string/description_post_likes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierContent"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+        app:srcCompat="@drawable/ic_like_24"
         tools:layout_constraintStart_toEndOf="parent" />
 
     <TextView
@@ -125,7 +124,7 @@
         app:layout_constraintStart_toEndOf="@id/share"
         app:layout_constraintTop_toTopOf="@id/share"
         tools:layout_constraintVertical_chainStyle="packed"
-        tools:text="@sample/posts.json/data/reposts" />
+        tools:text="@sample/posts.json/data/shared" />
 
     <TextView
         android:id="@+id/viewsText"
