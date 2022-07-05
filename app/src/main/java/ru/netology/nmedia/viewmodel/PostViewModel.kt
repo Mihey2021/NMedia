@@ -1,7 +1,5 @@
 package ru.netology.nmedia.viewmodel
 
-import android.view.View
-import androidx.constraintlayout.widget.Group
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.domain.repository.PostRepository
@@ -20,15 +18,17 @@ class PostViewModel() : ViewModel() {
     val data = repository.get()
     val edited = MutableLiveData(empty)
 
-    fun save(group: Group) {
+    fun save() {
         edited.value?.let { repository.save(it) }
-        edited.value = empty
-        group.visibility = View.GONE
+        clearEditingData()
     }
 
-    fun edit(post: Post, group: Group) {
-        group.visibility = View.VISIBLE
+    fun edit(post: Post) {
         edited.value = post
+    }
+
+    fun clearEditingData() {
+        edited.value = empty
     }
 
     fun changeContent(content: String) {

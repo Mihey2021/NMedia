@@ -9,7 +9,7 @@ import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.models.Post
-import ru.netology.nmedia.util.AndroidUtils.clearTextAndHideKeyboard
+import ru.netology.nmedia.activity.util.AndroidUtils
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+
+        val cancelEditGroup = binding.cancelEditingGroup
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                viewModel.edit(post, binding.cancelEditingGroup)
+                viewModel.edit(post)
             }
         }
         )
@@ -42,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         binding.list.adapter = adapter
 
         binding.cancelEditPostBtn.setOnClickListener {
-            clearTextAndHideKeyboard(binding.content)
+            viewModel.clearEditingData()
+            AndroidUtils.clearTextAndHideKeyboard(binding.content)
+            AndroidUtils.hideCancelEditGroup(cancelEditGroup)
         }
 
         binding.save.setOnClickListener {
@@ -57,9 +61,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 viewModel.changeContent(text.toString())
-                viewModel.save(binding.cancelEditingGroup)
+                viewModel.save()
 
-                clearTextAndHideKeyboard(binding.content)
+                AndroidUtils.clearTextAndHideKeyboard(binding.content)
             }
         }
 
@@ -68,7 +72,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.edited.observe(this) { post ->
-            if (post.id == 0L) return@observe
+            if (post.id == 0L) {
+                AndroidUtils.hideCancelEditGroup(cancelEditGroup)
+                return@observe
+            } else {
+                AndroidUtils.showCancelEditGroup(cancelEditGroup)
+            }
 
             with(binding.content) {
                 requestFocus()
