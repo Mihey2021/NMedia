@@ -6,4 +6,11 @@
     <string name="description_post_likes">Likes</string>
     <string name="description_post_share">Share</string>
     <string name="description_post_views">Views</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Add a new post here…</string>
+    <string name="description_post_edit">Changing the text of a post</string>
+    <string name="error_empty_post_content">Content can\'t be empty</string>
+    <string name="change_post">Change post</string>
+    <string name="cancel_editing_post">Cancel editing</string>
 </resources>

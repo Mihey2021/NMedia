@@ -7,4 +7,11 @@
     <string name="description_post_likes">Нравится</string>
     <string name="description_post_share">Поделиться</string>
     <string name="description_post_views">Просмотров</string>
+    <string name="menu_edit">Редактировать</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="post_text">Добавьте новый пост здесь…</string>
+    <string name="description_post_edit">Изменение текста поста</string>
+    <string name="error_empty_post_content">Контент не может быть пустым</string>
+    <string name="change_post">Редактирование поста</string>
+    <string name="cancel_editing_post">Отменить редактирование</string>
 </resources>
