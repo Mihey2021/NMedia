@@ -79,6 +79,8 @@ class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
             return oldItem == newItem
         }
 
+        //Еще один способ не применять анимацию (убрать "мерцание")
+        override fun getChangePayload(oldItem: Post, newItem: Post): Any = Unit
     }
 }
 

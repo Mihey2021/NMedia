@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.SimpleItemAnimator
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.list.adapter = adapter
+
+//        //Один из способов отключить анимацию
+//        (binding.list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
         binding.cancelEditPostBtn.setOnClickListener {
             viewModel.clearEditingData()
