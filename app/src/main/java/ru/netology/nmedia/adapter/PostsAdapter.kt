@@ -33,11 +33,11 @@ class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
-                likesText.text = prepareCountToDisplay(post.likes)
-                shareText.text = prepareCountToDisplay(post.shared)
-                viewsText.text = prepareCountToDisplay(post.views)
+                likes.text = prepareCountToDisplay(post.likes)
+                share.text = prepareCountToDisplay(post.shared)
+                views.text = prepareCountToDisplay(post.views)
                 avatar.setImageResource(post.avatar)
-                likes.setImageResource(if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24)
+                likes.isChecked = post.likedByMe
                 likes.setOnClickListener {
                     onInteractionListener.onLike(post)
 
