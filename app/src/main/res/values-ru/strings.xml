@@ -19,4 +19,8 @@
     <string name="description_post_save">Сохранить</string>
     <string name="add_post">Добавить пост</string>
     <string name="description_post_read">Прочитано!</string>
+    <string name="description_video_preview">Предпросмотр видео</string>
+    <string name="desription_play">Воспроизвести</string>
+    <string name="description_open_in_browser">Открыть в браузере</string>
+    <string name="warning_youtube_not_installed">Не установлен YouTube</string>
 </resources>

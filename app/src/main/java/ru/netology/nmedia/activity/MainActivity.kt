@@ -1,16 +1,20 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.launch
 import androidx.activity.viewModels
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.models.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
+import java.net.URI
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,26 @@ class MainActivity : AppCompatActivity() {
             override fun onRemove(post: Post) = viewModel.removeById(post.id)
 
             override fun onEdit(post: Post) = editPostLauncher.launch(post)
+
+            override fun onPlay(url: String?) {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url)
+                ).setPackage("com.google.android.youtube")
+                if (intent.resolveActivity(packageManager) == null) {
+                    Snackbar.make(
+                        binding.root, R.string.warning_youtube_not_installed,
+                        BaseTransientBottomBar.LENGTH_INDEFINITE
+                    )
+                        .setAction(R.string.description_open_in_browser) {
+                            val intentForBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intentForBrowser)
+                        }
+                        .show()
+                } else {
+                    startActivity(intent)
+                }
+            }
         }
         )
 

@@ -7,4 +7,5 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onShare(post: Post) {}
     fun onRemove(post: Post) {}
+    fun onPlay(url: String?) {}
 }

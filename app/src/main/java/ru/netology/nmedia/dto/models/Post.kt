@@ -12,5 +12,6 @@ data class Post(
     val likes: Int = 0,
     val likedByMe: Boolean = false,
     val shared: Int = 0,
-    val views: Int = 0
+    val views: Int = 0,
+    val video: String? = null
 ) : Serializable
