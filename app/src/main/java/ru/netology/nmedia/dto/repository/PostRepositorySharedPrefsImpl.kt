@@ -23,6 +23,7 @@ class PostRepositorySharedPrefsImpl(context: Context) : PostRepository {
             posts = gson.fromJson(it, type)
             data.value = posts
         }
+        refreshId()
     }
 
     override fun get(): LiveData<List<Post>> = data
@@ -31,7 +32,7 @@ class PostRepositorySharedPrefsImpl(context: Context) : PostRepository {
         if (post.id == 0L) {
             posts = listOf(
                 post.copy(
-                    id = nextId++,
+                    id = nextId + 1L,
                     author = "Me",
                     published = "now"
                 )
@@ -73,10 +74,15 @@ class PostRepositorySharedPrefsImpl(context: Context) : PostRepository {
         sync()
     }
 
-   private fun sync() {
-       with(prefs.edit()) {
-           putString(key, gson.toJson(posts))
-           apply()
-       }
-   }
+    private fun sync() {
+        with(prefs.edit()) {
+            putString(key, gson.toJson(posts))
+            apply()
+        }
+        refreshId()
+    }
+
+    private fun refreshId() {
+        nextId = posts.maxByOrNull { it.id }?.id ?: 0L
+    }
 }
