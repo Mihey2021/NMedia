@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/card_margin"
-    app:cardCornerRadius="@dimen/card_radius"
+    app:cardCornerRadius="@dimen/common_spacing"
     tools:context=".activity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,6 +52,45 @@
             app:layout_constraintTop_toBottomOf="@id/author"
             tools:text="@sample/posts.json/data/published" />
 
+        <ImageView
+            android:id="@+id/videoPreView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="#CCFFFFFF"
+            android:contentDescription="@string/description_video_preview"
+            android:padding="@dimen/basement_text_spacing"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@id/videoPreviewGroup"
+            app:layout_constraintEnd_toEndOf="@id/videoPreviewGroup"
+            app:layout_constraintStart_toStartOf="@id/videoPreviewGroup"
+            app:layout_constraintTop_toTopOf="@id/videoPreviewGroup"
+            app:srcCompat="@drawable/youtube" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/play"
+            style="@style/PlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/desription_play"
+            app:icon="@drawable/ic_play_circle_filled_24"
+            app:layout_constraintBottom_toBottomOf="@id/videoPreView"
+            app:layout_constraintEnd_toEndOf="@id/videoPreView"
+            app:layout_constraintStart_toStartOf="@id/videoPreView"
+            app:layout_constraintTop_toTopOf="@id/videoPreView" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/videoPreviewGroup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/basement_text_spacing"
+            android:visibility="visible"
+            app:constraint_referenced_ids="videoPreView, play"
+            app:layout_constraintBottom_toTopOf="@id/barrierContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
             style="@style/IconButton"
@@ -69,7 +108,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar, published, menu" />
+            app:constraint_referenced_ids="avatar, published, menu"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="80dp" />
 
         <TextView
             android:id="@+id/content"
@@ -86,9 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="content"
-            tools:layout_editor_absoluteX="178dp"
-            tools:layout_editor_absoluteY="305dp" />
+            app:constraint_referenced_ids="videoPreviewGroup" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/likes"

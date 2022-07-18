@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="liked">#FF0000</color>
     <color name="grey">#5A5D64</color>
+    <color name="grey_high">#A3373737</color>
 </resources>

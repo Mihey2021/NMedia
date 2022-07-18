@@ -1,6 +1,7 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -37,10 +38,15 @@ class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
                 share.text = prepareCountToDisplay(post.shared)
                 views.text = prepareCountToDisplay(post.views)
                 avatar.setImageResource(post.avatar)
+
+                videoPreviewGroup.visibility = if (post.video.isNullOrBlank()) View.GONE else View.VISIBLE
+                videoPreviewGroup.setOnClickListener {
+                    onInteractionListener.onPlay(post.video)
+                }
+
                 likes.isChecked = post.likedByMe
                 likes.setOnClickListener {
                     onInteractionListener.onLike(post)
-
                 }
 
                 menu.setOnClickListener {

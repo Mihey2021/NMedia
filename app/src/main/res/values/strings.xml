@@ -13,4 +13,13 @@
     <string name="error_empty_post_content">Content can\'t be empty</string>
     <string name="change_post">Change post</string>
     <string name="cancel_editing_post">Cancel editing</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="str_understandably_ok">OK</string>
+    <string name="description_post_save">Save</string>
+    <string name="add_post">Add post</string>
+    <string name="description_post_read">Read!</string>
+    <string name="description_video_preview">Video preview</string>
+    <string name="desription_play">Play</string>
+    <string name="description_open_in_browser">Open in browser</string>
+    <string name="warning_youtube_not_installed">YouTube not installed</string>
 </resources>

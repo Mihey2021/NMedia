@@ -1,17 +1,20 @@
 package ru.netology.nmedia.activity
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.activity.result.launch
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.models.Post
-import ru.netology.nmedia.activity.util.AndroidUtils
 import ru.netology.nmedia.viewmodel.PostViewModel
+import java.net.URI
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +24,14 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        val cancelEditGroup = binding.cancelEditingGroup
+        val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            result.first ?: return@registerForActivityResult
+            result.second ?: return@registerForActivityResult
+            viewModel.edit(result.first!!)
+            viewModel.changeContent(result.second!!)
+            viewModel.save()
+        }
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -29,15 +39,44 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onShare(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+
+                val shareIntent =
+                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                startActivity(shareIntent)
+
                 viewModel.shareById(post.id)
             }
 
-            override fun onRemove(post: Post) {
-                viewModel.removeById(post.id)
-            }
+            override fun onRemove(post: Post) = viewModel.removeById(post.id)
 
-            override fun onEdit(post: Post) {
-                viewModel.edit(post)
+            override fun onEdit(post: Post) = editPostLauncher.launch(post)
+
+            override fun onPlay(url: String?) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+                //Пример проверки установлено ли конкретное приложение (в данном случае - youtube)
+//                val intent = Intent(
+//                    Intent.ACTION_VIEW,
+//                    Uri.parse(url)
+//                ).setPackage("com.google.android.youtube")
+//                if (intent.resolveActivity(packageManager) == null) {
+//                    Snackbar.make(
+//                        binding.root, R.string.warning_youtube_not_installed,
+//                        BaseTransientBottomBar.LENGTH_INDEFINITE
+//                    )
+//                        .setAction(R.string.description_open_in_browser) {
+//                            val intentForBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+//                            startActivity(intentForBrowser)
+//                        }
+//                        .show()
+//                } else {
+//                    startActivity(intent)
+//                }
             }
         }
         )
@@ -47,46 +86,18 @@ class MainActivity : AppCompatActivity() {
 //        //Один из способов отключить анимацию
 //        (binding.list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
-        binding.cancelEditPostBtn.setOnClickListener {
-            viewModel.clearEditingData()
-            AndroidUtils.clearTextAndHideKeyboard(binding.content)
-            AndroidUtils.hideCancelEditGroup(cancelEditGroup)
-        }
-
-        binding.save.setOnClickListener {
-            with(binding.content) {
-                if (text.isNullOrBlank()) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        R.string.error_empty_post_content,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
-
-                viewModel.changeContent(text.toString())
-                viewModel.save()
-
-                AndroidUtils.clearTextAndHideKeyboard(binding.content)
-            }
-        }
-
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
 
-        viewModel.edited.observe(this) { post ->
-            if (post.id == 0L) {
-                AndroidUtils.hideCancelEditGroup(cancelEditGroup)
-                return@observe
-            } else {
-                AndroidUtils.showCancelEditGroup(cancelEditGroup)
-            }
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
 
-            with(binding.content) {
-                requestFocus()
-                setText(post.content)
-            }
+        binding.fab.setOnClickListener {
+            newPostLauncher.launch()
         }
     }
 }
