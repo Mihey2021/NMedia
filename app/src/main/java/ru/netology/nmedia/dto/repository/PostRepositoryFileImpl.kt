@@ -34,9 +34,10 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
 
     override fun save(post: Post) {
         if (post.id == 0L) {
+            val valueNextId = nextId
             posts = listOf(
                 post.copy(
-                    id = nextId + 1L,
+                    id = ++nextId,
                     author = "Me",
                     published = "now"
                 )

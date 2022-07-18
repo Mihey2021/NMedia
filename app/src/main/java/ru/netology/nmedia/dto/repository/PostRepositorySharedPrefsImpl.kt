@@ -32,7 +32,7 @@ class PostRepositorySharedPrefsImpl(context: Context) : PostRepository {
         if (post.id == 0L) {
             posts = listOf(
                 post.copy(
-                    id = nextId + 1L,
+                    id = ++nextId,
                     author = "Me",
                     published = "now"
                 )
