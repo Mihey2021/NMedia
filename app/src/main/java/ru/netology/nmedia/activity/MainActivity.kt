@@ -57,23 +57,26 @@ class MainActivity : AppCompatActivity() {
             override fun onEdit(post: Post) = editPostLauncher.launch(post)
 
             override fun onPlay(url: String?) {
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(url)
-                ).setPackage("com.google.android.youtube")
-                if (intent.resolveActivity(packageManager) == null) {
-                    Snackbar.make(
-                        binding.root, R.string.warning_youtube_not_installed,
-                        BaseTransientBottomBar.LENGTH_INDEFINITE
-                    )
-                        .setAction(R.string.description_open_in_browser) {
-                            val intentForBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                            startActivity(intentForBrowser)
-                        }
-                        .show()
-                } else {
-                    startActivity(intent)
-                }
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+                //Пример проверки установлено ли конкретное приложение (в данном случае - youtube)
+//                val intent = Intent(
+//                    Intent.ACTION_VIEW,
+//                    Uri.parse(url)
+//                ).setPackage("com.google.android.youtube")
+//                if (intent.resolveActivity(packageManager) == null) {
+//                    Snackbar.make(
+//                        binding.root, R.string.warning_youtube_not_installed,
+//                        BaseTransientBottomBar.LENGTH_INDEFINITE
+//                    )
+//                        .setAction(R.string.description_open_in_browser) {
+//                            val intentForBrowser = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+//                            startActivity(intentForBrowser)
+//                        }
+//                        .show()
+//                } else {
+//                    startActivity(intent)
+//                }
             }
         }
         )

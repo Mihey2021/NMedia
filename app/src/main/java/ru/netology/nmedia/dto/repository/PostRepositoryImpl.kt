@@ -48,7 +48,8 @@ class PostRepositoryImpl : PostRepository {
             likedByMe = false,
             likes = 99,
             shared = 9,
-            views = 200
+            views = 200,
+            video = "https://youtu.be/Ao3d1R1TCYc?list=PLeF3l86ZMVkLQbdRL6Ra4cr_cmPROj94y"
         ),
         Post(
             id = nextId++,
