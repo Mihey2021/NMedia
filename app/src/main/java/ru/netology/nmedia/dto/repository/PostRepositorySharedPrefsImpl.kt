@@ -14,7 +14,7 @@ class PostRepositorySharedPrefsImpl(context: Context) : PostRepository {
     private val prefs = context.getSharedPreferences("repo", Context.MODE_PRIVATE)
     private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private val key = "posts"
-    private var nextId = 1L
+    private var nextId = 0L
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
