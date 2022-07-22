@@ -72,6 +72,10 @@ class PostsAdapter(private val onInteractionListener: OnInteractionListener) :
                 share.setOnClickListener {
                     onInteractionListener.onShare(post)
                 }
+
+                postCardView.setOnClickListener {
+                    onInteractionListener.onPostView(post)
+                }
             }
         }
     }

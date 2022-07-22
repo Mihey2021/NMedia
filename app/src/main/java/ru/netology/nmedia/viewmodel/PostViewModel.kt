@@ -3,12 +3,9 @@ package ru.netology.nmedia.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.domain.repository.PostRepository
 import ru.netology.nmedia.dto.models.Post
 import ru.netology.nmedia.dto.repository.PostRepositoryFileImpl
-import ru.netology.nmedia.dto.repository.PostRepositoryImpl
-import ru.netology.nmedia.dto.repository.PostRepositorySharedPrefsImpl
 
 private val empty = Post(
     id = 0,
@@ -27,8 +24,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     //Репозиторий с хранением в файле
     private val repository: PostRepository = PostRepositoryFileImpl(application)
 
-    val data = repository.get()
-    val edited = MutableLiveData(empty)
+    val data = repository.getAll()
+    private val edited = MutableLiveData(empty)
 
     fun save() {
         edited.value?.let { repository.save(it) }
@@ -39,7 +36,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value = post
     }
 
-    fun clearEditingData() {
+    private fun clearEditingData() {
         edited.value = empty
     }
 
