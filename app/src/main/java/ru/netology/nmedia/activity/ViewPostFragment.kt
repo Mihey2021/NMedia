@@ -10,7 +10,7 @@ import ru.netology.nmedia.activity.util.PostArg
 import ru.netology.nmedia.databinding.FragmentViewPostBinding
 import ru.netology.nmedia.dto.models.Post
 
-class ViewPostFragment : Fragment(R.layout.card_post) {
+class ViewPostFragment : Fragment() {
 
     companion object {
         var Bundle.viewPostArg: Post? by PostArg
